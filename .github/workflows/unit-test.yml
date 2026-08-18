@@ -1,0 +1,25 @@
+name: Unit Test
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+on:
+  pull_request: { types: [opened, reopened, synchronize, ready_for_review] }
+  push: { branches: [ develop ] }
+
+jobs:
+  unit-tests:
+    uses: whooshing-workshop/ci/.github/workflows/run-unit-tests.yml@develop
+    with:
+      ios_scheme_name: whooshing.nexus
+      work_dir: "."
+
+      with_api_check: false
+      with_release_mode_testing: true
+      ios_xcodebuild_action: ''
+      
+      with_musl: true
+      with_tsan: false
+      extra_musl_flags: --target whooshing.nexus
+    secrets: inherit
