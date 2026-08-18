@@ -21,5 +21,5 @@ jobs:
       
       with_musl: true
       with_tsan: false
-      extra_musl_flags: --target whooshing.nexus
+      extra_musl_flags: --target Nexus
     secrets: inherit
