@@ -10,6 +10,8 @@ public extension Environment {
     /// 代表服务模块当前环境的配置项，例如服务端口、数据库信息、域名等。
     @frozen
     struct Config: @unchecked Sendable, CustomStringConvertible, Loggerable {
+        /// 模块 ID，又名 moduleId，仅用于模块区分
+        public let id: UUID
         /// 模块名称
         public let name: String
         /// 当前服务监听的端口号
@@ -40,6 +42,7 @@ public extension Environment {
         /// 初始化环境配置，仅在 ``Whooshing.Env`` 为 `.independentDebug(...)` 时才可能使用
         /// 这些参数在非 `.independentDebug(...)` 模式下会自动从环境变量中读取
         /// - Parameters:
+        ///   - id: 模块 ID，又名 moduleId
         ///   - name: 模块名称
         ///   - hostname: 服务监听地址
         ///   - port: 服务监听端口
@@ -49,6 +52,7 @@ public extension Environment {
         ///   - log: 日志输出配置，若指定为 nil(仅测试及独立开发环境)，则在用户目录下创建 ~/whooshing_logs/项目名_logs 文件夹
         ///   - driverKeys: 要注入的驱动列表
         public init(
+            id: UUID,
             name: String,
             port: Int = 6500,
             hostname: String = "127.0.0.1",
@@ -58,6 +62,7 @@ public extension Environment {
             log: Log? = nil,
             driverKeys: [any DriverKey.Type] = [],
         ) {
+            self.id = id
             self.name = name
             self.port = port
             self.hostname = hostname
@@ -80,6 +85,7 @@ public extension Environment {
             }
             
             return [
+                "id": AnyCodable(id),
                 "name": AnyCodable(name),
                 "port": AnyCodable(port),
                 "hostname": AnyCodable(hostname),
