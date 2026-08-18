@@ -11,7 +11,7 @@ public enum Bootstrap {
         public let logger: Logger
         public let environment: Environment
         public let config: Environment.Config
-        public let eventloopGroup: EventLoopGroup
+        public let eventLoopGroup: EventLoopGroup
         public let driverKeys: [any Environment.DriverKey.Type]
         public let loggingFactory: LoggingFactory
         
@@ -20,14 +20,14 @@ public enum Bootstrap {
             logger: Logger,
             environment: Environment,
             config: Environment.Config,
-            eventloopGroup: EventLoopGroup,
+            eventLoopGroup: EventLoopGroup,
             driverKeys: [any Environment.DriverKey.Type],
             loggingFactory: LoggingFactory
         ) {
             self.logger = logger
             self.environment = environment
             self.config = config
-            self.eventloopGroup = eventloopGroup
+            self.eventLoopGroup = eventLoopGroup
             self.driverKeys = driverKeys
             self.loggingFactory = loggingFactory
         }
@@ -131,7 +131,7 @@ public enum Bootstrap {
                 logger: logger,
                 environment: env,
                 config: config,
-                eventloopGroup: MultiThreadedEventLoopGroup.singleton,
+                eventLoopGroup: MultiThreadedEventLoopGroup.singleton,
                 driverKeys: driverKeys,
                 loggingFactory: factory
             )

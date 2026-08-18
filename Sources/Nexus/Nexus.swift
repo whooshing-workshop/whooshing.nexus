@@ -83,7 +83,7 @@ public struct Nexus<T: Tube>: Sendable {
     /// 当前环境的配置项（端口、数据库等）
     public let config: Environment.Config
     /// 所运行与的 eventloop 组
-    public let eventloopGroup: EventLoopGroup
+    public let eventLoopGroup: EventLoopGroup
     /// 当前服务使用的日志记录器
     public let logger: Logger
     
@@ -103,7 +103,7 @@ public struct Nexus<T: Tube>: Sendable {
         self.logger = bootstrap.logger
         self.config = bootstrap.config
         self.driverKeys = bootstrap.driverKeys
-        self.eventloopGroup = bootstrap.eventloopGroup
+        self.eventLoopGroup = bootstrap.eventLoopGroup
         self.loggingFactory = bootstrap.loggingFactory
     }
     
