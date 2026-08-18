@@ -21,7 +21,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-system", from: "1.7.5"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.6.0"),
         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.0"),
-        .package(url: "https://github.com/vapor/routing-kit.git", from: "4.9.3"),
         .package(url: "https://github.com/whooshing-workshop/whooshing.toolbox-basic.git", from: "1.6.2")
     ],
     targets: [
@@ -31,7 +30,6 @@ let package = Package(
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "AnyCodable", package: "AnyCodable"),
-                .product(name: "RoutingKit", package: "routing-kit"),
                 .product(name: "Cryptos", package: "whooshing.toolbox-basic"),
                 .product(name: "LoggingAdvanced", package: "whooshing.toolbox-basic"),
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),

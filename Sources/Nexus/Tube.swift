@@ -1,4 +1,3 @@
-import RoutingKit
 import Logging
 
 public protocol Tube: Sendable {
@@ -9,7 +8,6 @@ public protocol Tube: Sendable {
     
     typealias Handler = @Sendable (Request) async throws -> HandlerResponse
     
-    var router: TrieRouter<Handler> { get }
     var logger: Logger { get }
     
     func execute() async -> Result<Void, Failure>
