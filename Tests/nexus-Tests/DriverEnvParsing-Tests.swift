@@ -214,7 +214,7 @@ struct DriverEnvParsingTests {
         #expect(project.dbServices[0].dbs[0].id.string == "service_1/woo_db")
         #expect(project.dbServices[0].dbs[0].parameter.user == "woo")
         #expect(project.dbServices[0].dbs[0].parameter.password == "woo_test")
-        #expect(project.dbServices[0].dbs[0].parameter.fileStorageKey == TestingShared.wrongApiClientToken)
+        #expect(project.dbServices[0].dbs[0].parameter.fileStorageKey == Self.TestToken)
         
         #expect(project.dbServices[1].id == .init(string: "service_2"))
         #expect(project.dbServices[1].port == 5433)
@@ -222,11 +222,11 @@ struct DriverEnvParsingTests {
         #expect(project.dbServices[1].dbs[0].id.string == "service_2/woo_db_2")
         #expect(project.dbServices[1].dbs[0].parameter.user == "woo_2")
         #expect(project.dbServices[1].dbs[0].parameter.password == "woo_test_2")
-        #expect(project.dbServices[1].dbs[0].parameter.fileStorageKey == TestingShared.wrongApiClientToken)
+        #expect(project.dbServices[1].dbs[0].parameter.fileStorageKey == Self.TestToken)
         #expect(project.dbServices[1].dbs[1].id.string == "service_2/woo_db_2_2")
         #expect(project.dbServices[1].dbs[1].parameter.user == "woo_2_2")
         #expect(project.dbServices[1].dbs[1].parameter.password == "woo_test_2_2")
-        #expect(project.dbServices[1].dbs[1].parameter.fileStorageKey == TestingShared.wrongApiClientToken)
+        #expect(project.dbServices[1].dbs[1].parameter.fileStorageKey == Self.TestToken)
         
         #expect(project.optionalExtras == nil)
         
