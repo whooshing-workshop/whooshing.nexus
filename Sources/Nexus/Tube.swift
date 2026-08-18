@@ -1,7 +1,7 @@
 import RoutingKit
 import Logging
 
-public protocol Tube {
+public protocol Tube: Sendable {
     associatedtype Request: Sendable
     associatedtype Response: Sendable
     associatedtype HandlerResponse: Sendable
