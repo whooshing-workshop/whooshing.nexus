@@ -10,9 +10,8 @@ final class SyncResultBox<T, E: Error>: @unchecked Sendable {
 @inlinable
 public func asyncResultToSync<T, E>(
     action: @escaping @Sendable () async -> Result<T, E>
-) -> T where T: Sendable {
+) throws(E) -> T where T: Sendable, E: Error {
     let semaphore = DispatchSemaphore(value: 0)
-    
     let box = SyncResultBox<T, E>()
     
     Task {
@@ -24,7 +23,7 @@ public func asyncResultToSync<T, E>(
     
     switch box.result {
     case .success(let storage): return storage
-    case .failure(let error): fatalError(String(reflecting: error))
+    case .failure(let error): throw error
     case .none: fatalError("异步任务未返回结果却触发了信号量")
     }
 }
@@ -32,10 +31,13 @@ public func asyncResultToSync<T, E>(
 @inlinable
 public func asyncToSync<T, E>(
     action: @escaping @Sendable () async throws(E) -> T
-) -> T where T: Sendable {
-    asyncResultToSync {
-        await .async { () throws(E) in
-            try await action()
+) throws(E) -> T where T: Sendable, E: Error {
+    try asyncResultToSync {
+        do {
+            let value = try await action()
+            return Result<T, E>.success(value)
+        } catch {
+            return Result<T, E>.failure(error as! E)
         }
     }
 }

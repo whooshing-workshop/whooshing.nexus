@@ -95,7 +95,7 @@ public struct Nexus<T: Tube>: Sendable {
     public let driverKeys: [any Environment.DriverKey.Type]
     public let loggingFactory: LoggingFactory
     
-    init(
+    public init(
         tube: T,
         bootstrap: Bootstrap.Paras
     ) {
