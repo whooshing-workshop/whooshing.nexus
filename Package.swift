@@ -32,6 +32,7 @@ let package = Package(
                 .product(name: "AnyCodable", package: "AnyCodable"),
                 .product(name: "Cryptos", package: "whooshing.toolbox-basic"),
                 .product(name: "LoggingAdvanced", package: "whooshing.toolbox-basic"),
+                .product(name: "NIOAdvanced", package: "whooshing.toolbox-basic"),
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "OrderedCollections", package: "swift-collections")
             ],
