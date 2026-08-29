@@ -1,4 +1,3 @@
-import PrivilegeModuleExtended
 @preconcurrency import AnyCodable
 
 public enum Generator: Sendable {
