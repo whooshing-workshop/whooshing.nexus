@@ -88,7 +88,7 @@ public struct ApiValidator: AsyncMiddleware {
             guard clientResponse.status == .ok else {
                 var suggestions: [String] = ["请提供正确的用户凭据及加密 Token"]
                 if
-                    let encryptedData = try? tokenEncrypted.dataRes.get(),
+                    let encryptedData = try? Base64String(tokenEncrypted).dataRes.get(),
                     let possibleToken = try? Crypto.Symm.encrypt(Crypto.hash(encryptedData), key: .init(data: encryptedData)).get().base64EncodedString()
                 {
                     suggestions.append("可能是由于提供的 Token 为未加密格式，尝试加密格式: \(possibleToken)")
@@ -120,7 +120,7 @@ public struct ApiValidator: AsyncMiddleware {
         
         request.storage[ApiAuthDataKey.self] = buffer
         
-        return try await required(throws: NexusErrcase.executionFailed, category: .inherit) {
+        return try await required(throws: NexusErrcase.nextResponedFailed, category: .inherit) {
             try await next.respond(to: request)
         }
     }
