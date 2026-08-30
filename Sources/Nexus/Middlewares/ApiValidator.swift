@@ -111,7 +111,7 @@ public struct ApiValidator: AsyncMiddleware {
                 logger.warning("[Debug] 凭据与 Token 命中白名单，跳过远程认证直接放行")
             } else {
                 logger.warning("[Debug] 凭据或 Token 不在白名单中/不匹配，调试模式拒绝访问")
-                throw NexusErrcase.apiValidateFailed.d("[Debug] 凭据或 Token 未在白名单中", category: .external(suggestions: ["请提供在 Debug 白名单中的用户凭据和加密 Token"], userdata: .init(HTTPResponseStatus.forbidden)))
+                throw NexusErrcase.apiValidateFailed.d("[Debug] 凭据或 Token 未在白名单中", category: .external(suggestions: ["请提供在 Debug 白名单中的用户凭据和加密 Token"], userdata: .init(HTTPResponseStatus.unauthorized)))
             }
         }
         
@@ -139,7 +139,7 @@ public struct ApiValidator: AsyncMiddleware {
     func debugTokenAuth(with origin: Data, encrypted: String, credential: String) throws(NexusErrcase.ErrType)  -> (SendableSymmKey, ByteBuffer) {
         let key = SendableSymmKey(key: .init(data: origin))
         
-        let encryptedData = try required(throws: NexusErrcase.apiValidateFailed, "用户 Token 非合法 base64 字符串", category: .external(suggestions: ["请提供正确的用户加密 Token 的 base64 字符串"], userdata: .init(HTTPResponseStatus.badRequest))) {
+        let encryptedData = try required(throws: NexusErrcase.apiValidateFailed, "用户 Token 非合法 base64 字符串", category: .external(suggestions: ["请提供正确的用户加密 Token 的 base64 字符串"], userdata: .init(HTTPResponseStatus.unauthorized))) {
             try Base64String(encrypted).dataRes.get()
         }
         
@@ -152,11 +152,11 @@ public struct ApiValidator: AsyncMiddleware {
                 suggestions.append("可能是由于提供的 Token 为未加密格式，尝试加密格式: \(possibleToken)")
             }
             
-            throw NexusErrcase.apiValidateFailed.d("[Debug] 所提供的 Token 无法解析", category: .external(suggestions: suggestions))
+            throw NexusErrcase.apiValidateFailed.d("[Debug] 所提供的 Token 无法解析", category: .external(suggestions: suggestions, userdata: .init(HTTPResponseStatus.unauthorized)))
         }
         
         let keyHashed = Crypto.hash(origin)
-        guard keyHashed == authData else { throw NexusErrcase.apiValidateFailed.d("[Debug] 用户 Token 不正确", category: .external(suggestions: ["请提供正确的 Token"])) }
+        guard keyHashed == authData else { throw NexusErrcase.apiValidateFailed.d("[Debug] 用户 Token 不正确", category: .external(suggestions: ["请提供正确的 Token"], userdata: .init(HTTPResponseStatus.unauthorized))) }
         let rawData: [String: AnyCodable] = [
             "key": AnyCodable(key),
             "token": AnyCodable(Generator.fakeTokenData(credential: credential, token: encrypted))
