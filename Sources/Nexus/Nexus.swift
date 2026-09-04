@@ -78,7 +78,11 @@ public struct Mode: Sendable, CustomStringConvertible, Loggerable {
     }
 }
 
-public struct Nexus<T: Tube>: Sendable {
+public protocol AnyNexus: Sendable {
+    var config: Environment.Config { get }
+}
+
+public struct Nexus<T: Tube>: AnyNexus {
     public let tube: T
     /// 当前环境的配置项（端口、数据库等）
     public let config: Environment.Config
@@ -105,6 +109,7 @@ public struct Nexus<T: Tube>: Sendable {
         self.driverKeys = bootstrap.driverKeys
         self.eventLoopGroup = bootstrap.eventLoopGroup
         self.loggingFactory = bootstrap.loggingFactory
+        tube.config(from: self)
     }
     
     public func execute() async throws {

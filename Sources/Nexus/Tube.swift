@@ -10,6 +10,8 @@ public protocol Tube: Sendable {
     
     var logger: Logger { get }
     
+    func config<T>(from nexus: Nexus<T>)
+    
     func execute() async -> Result<Void, Failure>
     func asyncShutdown() async -> Result<Void, Failure>
     func executeWithAsyncShutdown() async -> Result<Void, Failure>
