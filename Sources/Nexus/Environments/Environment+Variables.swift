@@ -22,8 +22,6 @@ public extension Environment {
         public let dbServices: [DBService]
         /// 服务管理平台的基础 URL，用于内部通信
         public let managerUrl: URL
-        /// API 验证策略
-        public let apiStrategy: ApiValidator.Strategy
         /// 可选的域名信息
         public let domain: String?
         /// 日志输出配置
@@ -60,7 +58,6 @@ public extension Environment {
             hostname: String = "127.0.0.1",
             dbServices: [DBService] = [],
             managerUrl: URL = .init(string: "http://testing.com")!,
-            apiStrategy: ApiValidator.Strategy,
             domain: String? = nil,
             log: Log? = nil,
             driverKeys: [any DriverKey.Type] = [],
@@ -71,7 +68,6 @@ public extension Environment {
             self.hostname = hostname
             self.dbServices = dbServices
             self.managerUrl = managerUrl
-            self.apiStrategy = apiStrategy
             self.domain = domain
             self.log = log ?? .init(
                 directory: .homeDirectoryURL.appending(component: "whooshing_logs").appending(
@@ -95,7 +91,6 @@ public extension Environment {
                 "hostname": AnyCodable(hostname),
                 "db_services": AnyCodable(dbServices.map { $0.json }),
                 "manager_url": AnyCodable(managerUrl),
-                "api_strategy": AnyCodable(apiStrategy.logDescription),
                 "domain": AnyCodable(domain),
                 "log": AnyCodable(log.json),
                 "storage": AnyCodable(paras)

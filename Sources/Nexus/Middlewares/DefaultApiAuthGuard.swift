@@ -13,3 +13,11 @@ public struct DefaultApiAuthGuard: AsyncMiddleware {
 }
 
 extension Data: @retroactive Authenticatable {}
+
+public struct ApiAuthDataKey: StorageKey {
+    public typealias Value = ByteBuffer
+}
+
+public extension Request {
+    var apiAuthData: ByteBuffer { self.storage[ApiAuthDataKey.self]! }
+}

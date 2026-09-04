@@ -13,7 +13,6 @@ extension Environment.Config: Environment.Template {
         origin["hostname"] = .string()
         origin["domain"] = .string(optional: true)
         origin["manager_url"] = .url()
-        origin["api_strategy_auth_url"] = .url()
         origin["db_services"] = .array(.template(Environment.DBService.self))
         origin["log"] = .template(Environment.Log.self)
     }
@@ -31,7 +30,6 @@ extension Environment.Config: Environment.Template {
         self.name = data["name"] as! String
         self.port = data["port"] as! Int
         self.hostname = data["hostname"] as! String
-        self.apiStrategy = .normal(authURL: data["api_strategy_auth_url"] as! URL)
         self.domain = data["domain"] as? String
         self.managerUrl = data["manager_url"] as! URL
         self.dbServices = data["db_services"] as! [Environment.DBService]
