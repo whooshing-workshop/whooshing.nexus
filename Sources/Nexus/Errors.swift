@@ -8,9 +8,7 @@ public enum NexusErrcase: String, ErrList, Sendable {
     case vaporAppCreateFailed = "Vapor App 创建失败"
     case serviceInitFailed = "服务初始化配置失败"
     case executionFailed = "运行时出错，错误未被处理"
-    case nextResponedFailed = "处理请求失败"
     case shutdownFailed = "关闭服务时出错"
-    case apiValidateFailed = "用户身份验证失败"
 }
 
 public extension Error {
